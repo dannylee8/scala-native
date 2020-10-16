@@ -408,6 +408,17 @@ object IssuesSuite extends tests.Suite {
       assert(data(0).toString == "64")
     }
   }
+
+  test("#1950") {
+    import issue1950._
+    List(new ValueClass(1.0f))
+      .map(_.value)
+      .foreach(assertEquals(1.0f, _, 0.00001))
+
+    List(ValueClass2("hello"))
+      .map(_.string)
+      .foreach(assertEquals("hello", _))
+  }
 }
 
 package issue1090 {
@@ -443,4 +454,9 @@ package issue1359 {
 
     def main(args: Array[String]): Unit = f2(f)
   }
+}
+
+package issue1950 {
+  final class ValueClass(val value: Float)     extends AnyVal
+  final case class ValueClass2(string: String) extends AnyVal
 }
